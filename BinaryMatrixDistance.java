@@ -1,5 +1,3 @@
-import java.lang.*;
-
 public class BinaryMatrixDistance {
 
     public int getDistance(int[][] mat, int row, int column) {
