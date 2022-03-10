@@ -26,13 +26,18 @@ class NQueens:
     def print_board(self, matrix):
 
         # print("FROM PRINTING")
-
+        answer = []
         for i in range(len(matrix)):
+            lst = []
+            str = ""
 
-            print("------------------GRID {}----------------".format(i))
             for j in range(len(matrix[0])):
-                print(matrix[i][j], end=" ")
-                print()
+                str+= matrix[i][j]
+            
+            lst.append(str)
+            answer.append(lst)
+
+        return answer
         
 
     def N_Queen(self, n):
@@ -48,11 +53,13 @@ class NQueens:
 
         # print(answer[0])
 
-        self.print_board(answer)
+        print(self.print_board(answer))
+
+        # print(answer)
 
 
     
 if __name__ == "__main__":
 
-    n = 8
+    n = 4
     ans = NQueens().N_Queen(n)

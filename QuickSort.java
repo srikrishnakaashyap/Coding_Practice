@@ -19,26 +19,21 @@ public class QuickSort {
 
     public int partition(int arr[], int start, int end) {
 
-        int pivot = end;
+        int pivot = arr[end];
+        int left = start - 1;
 
-        int left = start;
-        int right = end - 1;
-
-        while (left <= right) {
-
-            if (arr[left] <= arr[pivot]) {
+        for(int j = start; j < end; j++){
+            if(arr[j] <= pivot){
                 left++;
-            }
-            if (arr[right] > arr[pivot]) {
-                right--;
-            }
-            if (arr[left] > arr[pivot] && arr[right] <= arr[pivot]) {
-                this.swap(left, right, arr);
+                this.swap(left, j, arr);
             }
         }
 
-        this.swap(left - 1, pivot, arr);
+        left++;
+        this.swap(left, end, arr);
         return left;
+
+        
 
     }
 
@@ -47,6 +42,8 @@ public class QuickSort {
         if (start < end) {
 
             int pi = this.partition(arr, start, end);
+
+            // System.out.println("PARTITION "+ pi);
 
             this.quickSortHelper(arr, start, pi - 1);
             this.quickSortHelper(arr, pi + 1, end);
