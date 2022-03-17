@@ -1,5 +1,5 @@
 class KSmallestElement:
-    
+
     def partition(self, array, start, end, index):
 
         array[index], array[end] = array[end], array[index]
@@ -8,18 +8,15 @@ class KSmallestElement:
 
         for i in range(start, end):
             if array[i] <= pivot:
-                left+=1
+                left += 1
                 array[left], array[i] = array[i], array[left]
 
-        left+=1
+        left += 1
 
         array[left], array[end] = array[end], array[left]
-
-        # print(array)
         return left
 
     def median(self, array):
-
         array = sorted(array)
         mid = len(array) // 2
         return array[mid]
@@ -39,7 +36,7 @@ class KSmallestElement:
         # print(array)
         if len(array) == 0:
             return
-        if len(array) <=2:
+        if len(array) <= 2:
             return array[0]
         return self.computeMedians(self.computeMediansHelper(array[:]))
 
@@ -60,10 +57,6 @@ class KSmallestElement:
         else:
             # Move Left
             return self.ksmallest(array[0: pivotIndex], k)
-
-
-
-
 
 
 if __name__ == "__main__":
