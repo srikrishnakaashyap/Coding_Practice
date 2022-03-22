@@ -4,7 +4,7 @@ def permutations_helper(array):
 
     def permutations(first=0, curr=[]):
 
-        if(len(curr) == k):
+        if(len(curr) == 3):
             output.append(curr[:])
             return
 
@@ -16,10 +16,12 @@ def permutations_helper(array):
 
             curr.pop()
 
+            permutations(index + 1, curr)
+
     output = []
 
-    for k in range(len(array) + 1):
-        permutations()
+    # for k in range(len(array) + 1):
+    permutations()
 
     return output
 
