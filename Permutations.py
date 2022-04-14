@@ -2,10 +2,10 @@
 
 def permutations_helper(array):
 
-    def permutations(first=0, curr=[]):
+    def permutations(first, curr):
 
         if(len(curr) == 3):
-            output.append(curr[:])
+            output.append(curr)
             return
 
         for index in range(first, len(array)):
@@ -21,7 +21,7 @@ def permutations_helper(array):
     output = []
 
     # for k in range(len(array) + 1):
-    permutations()
+    permutations(0, [])
 
     return output
 
