@@ -46,8 +46,6 @@ class CoinChange:
 
                 dp[index][amt] = min(pick, nopick)
 
-        print(dp)
-
         if dp[n-1][amount] == math.inf:
             return -1
         return dp[n - 1][amount]
