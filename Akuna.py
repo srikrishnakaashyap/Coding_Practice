@@ -1,6 +1,7 @@
 import fileinput
 from typing import List, Tuple
-from datetime import timedelta
+from datetime import timedelta, datetime
+
 # Enter your code here. Read input from STDIN. Print output to STDOUT
 """
 RAW_TRADE_HEADER = ["trade_id", "trade_date", "time_of_trade", "portfolio", "exchange", "product", "product_type", "expiry_dt", "qty", "strike_price", "side"]
@@ -8,30 +9,16 @@ RAW_TRADE_HEADER = ["trade_id", "trade_date", "time_of_trade", "portfolio", "exc
 
 
 class Solution:
-
     raw_trade_list = []
 
     def check_time(self, date1, date2):
 
-        date1 = date1.split(":")
-        date2 = date2.split(":")
-        if date1[0] == "00":
-            date1[0] = "24"
+        c = date1 - date2
 
-        if date2[0] == "00":
-            date2[0] = "24"
-
-        time1 = timedelta(hours=int(date1[0]), minutes=int(
-            date1[1]), seconds=int(date1[2]))
-        time2 = timedelta(hours=int(date2[0]), minutes=int(
-            date2[1]), seconds=int(date2[2]))
-
-        if time1.seconds > time2.seconds and time1.seconds - time2.seconds <= 60:
-            return True
-        return False
+        print(c.total_seconds() <= 60)
+        return c.total_seconds() <= 60
 
     def process_raw_trade(self, raw_trade: List):
-        # print(type(raw_trade[2]))
         if raw_trade[4] == "CBOE":
             if int(raw_trade[-2]) > 0:
                 raw_trade.append("BUY")
@@ -40,34 +27,38 @@ class Solution:
         self.raw_trade_list.append(raw_trade)
 
     def run(self) -> List[Tuple[str, str]]:
+        raw_trade_list = sorted(self.raw_trade_list, key=lambda x: datetime.strptime(
+            x[1] + " " + x[2], '%Y-%m-%d %H:%M:%S'))
 
-        raw_trade_list = self.raw_trade_list
+        print(raw_trade_list)
+
         n = len(raw_trade_list)
         answer = []
         for i in range(n):
-            if raw_trade_list[i][3] != "Broker":
+            if raw_trade_list[i][3] == "Broker":
 
-                j = i + 1
-                if j < n:
-                    self.check_time(raw_trade_list[j][2], raw_trade_list[i][2])
-                while(j < n and self.check_time(raw_trade_list[j][2], raw_trade_list[i][2]) and raw_trade_list[j][3] == "Broker"):
-                    if raw_trade_list[i][5] == raw_trade_list[j][5] and raw_trade_list[i][6] == raw_trade_list[j][6] and raw_trade_list[i][10] == raw_trade_list[j][10] and raw_trade_list[i][7] == raw_trade_list[j][7] and raw_trade_list[i][9] == raw_trade_list[j][9]:
+                temp_answer = []
+                j = i - 1
+                while(j >= 0 and self.check_time(
+                        datetime.strptime(
+                            raw_trade_list[i][1] + " " + raw_trade_list[i][2], '%Y-%m-%d %H:%M:%S'),
+                        datetime.strptime(raw_trade_list[j][1] + " " + raw_trade_list[j][2], '%Y-%m-%d %H:%M:%S'))):
 
-                        answer.append(
-                            (raw_trade_list[j][0], raw_trade_list[i][0], raw_trade_list[i][2]))
-                    j += 1
+                    if raw_trade_list[j][3] != "Broker" and raw_trade_list[i][5] == raw_trade_list[j][5] and raw_trade_list[i][6] == raw_trade_list[j][6] and raw_trade_list[i][10] == raw_trade_list[j][10] and raw_trade_list[i][7] == raw_trade_list[j][7] and raw_trade_list[i][9] == raw_trade_list[j][9]:
 
-        temp = sorted(answer, key=lambda x: x[2])
-        answer2 = []
-        for t in temp:
-            answer2.append((t[0], t[1]))
-        return answer2
+                        temp_answer.append(
+                            (raw_trade_list[i][0], raw_trade_list[j][0]))
+                    j -= 1
+
+                answer += reversed(temp_answer)
+
+        return answer
 
 
 if __name__ == '__main__':
     solution = Solution()
-    for row in fileinput.input():
-        raw_trade = list(row.strip().replace(" ", "").split(","))
-        solution.process_raw_trade(raw_trade)
+    solution.raw_trade_list = [['vgv2os', '2022-01-9', '23:59:59', 'Akuna24', 'CME', 'TSLA', 'P', '2022-05-31', '850', '880', 'SELL'], ['gutvzg', '2022-01-10', '15:12:54', 'Akuna31', 'CME', 'TSLA', 'C', '2022-05-24', '950', '880', 'BUY'], [
+        '377tvk', '2022-01-10', '00:00:01', 'Broker', 'CME', 'TSLA', 'C', '2022-05-24', '900', '880', 'BUY'], ['0puaap', '2022-01-10', '15:34:32', 'Akuna17', 'CBOE', 'FB', 'C', '2022-05-24', '800', '800', 'BUY']]
 
-    print(solution.run())
+
+print(solution.run())

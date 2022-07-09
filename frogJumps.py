@@ -1,4 +1,37 @@
+import math
+
+
 class FrogJumps:
+
+    def minimumJumps(self, arr, n):
+        dp = [math.inf for i in range(n)]
+
+        def f(presentIndex, dp):
+            # print(presentIndex)
+            if presentIndex == n-1:
+                return 0
+
+            if presentIndex >= n:
+                return math.inf
+
+            if dp[presentIndex] != math.inf:
+                return dp[presentIndex]
+
+            mini = math.inf
+            for i in range(1, arr[presentIndex] + 1):
+                jump = 1 + f(presentIndex + i, dp)
+                if jump != math.inf:
+                    mini = min(mini, jump)
+
+                print(presentIndex, jump)
+
+            dp[presentIndex] = min(dp[presentIndex], mini)
+            return dp[presentIndex]
+
+        answer = f(0, dp)
+        if answer == math.inf:
+            return -1
+        return answer
 
     def frogJumps(self, n, heights, k):
 
@@ -20,9 +53,11 @@ class FrogJumps:
 if __name__ == "__main__":
 
     f = FrogJumps()
-    # arr = 27 35 43 34 27 19 7 38 16 18 46 13 14 50 34 38 36 34 26 39 6 41 23 1 33 30 45 13 47 13 22 20 3 1 17 26 45 39 22 45 21 11 30 44 36 45 29 27 39 42 40 35 46 31 21 6 31 50 20 50 10 10 24 6 30 29 44 39 42 14 23 12 4 1 35 5 45 40 44 42 47 24 48 16 21 50 34 4 13 5 36 46 20 45 3 13, 7]
-    k = int(input())
-    arr = list(map(int, input().split()))
+
+    # n = len(arr)
+
+    # print(f.frogJumps(n, arr, k))
+    arr = [2, 1, 3, 2, 4]
     n = len(arr)
 
-    print(f.frogJumps(n, arr, k))
+    print(f.minimumJumps(arr, n))
