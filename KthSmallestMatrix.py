@@ -27,8 +27,6 @@ class KthSmallestMatrix:
             for row in matrix:
                 nsmaller += self.lower_bound(row, mid)
 
-            # print(low, mid, high, nsmaller)
-
             if nsmaller < k - 1:
                 low = mid + 1
             else:

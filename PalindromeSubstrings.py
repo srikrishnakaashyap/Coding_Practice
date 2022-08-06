@@ -54,9 +54,6 @@ class PalindromeSubstrings:
 
         f(0, n-1, dp)
 
-        for row in dp:
-            print(row)
-
         return dp[0][n-1]
 
 
