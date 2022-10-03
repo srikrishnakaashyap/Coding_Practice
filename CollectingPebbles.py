@@ -1,4 +1,5 @@
 import math
+import collections
 
 
 class CollectingPebbles:
@@ -7,11 +8,14 @@ class CollectingPebbles:
 
             if remaining < 0:
                 return math.inf
+
             if index == 0:
                 if remaining < bucketSize[0]:
                     return math.inf
+
                 if remaining % bucketSize[0] == 0:
                     return remaining // bucketSize[0]
+
                 return math.inf
 
             if remaining == 0:
@@ -27,51 +31,40 @@ class CollectingPebbles:
             return min(pick, nopick)
 
         n = len(bucketSize)
-        dp = [[0 for i in range(numberOfPebbles + 1)] for j in range(n)]
+        dp = [[-1 for i in range(numberOfPebbles + 1)] for j in range(n)]
 
-        print(dp)
-        for i in range(n):
-            dp[i][0] = math.inf
+        # print(dp)
+        # for i in range(n):
+        #     dp[i][0] = math.inf
 
-        for i in range(numberOfPebbles + 1):
-            if i < bucketSize[0]:
-                dp[0][i] = math.inf
-            elif i % bucketSize[0] == 0:
-                dp[0][i] = i // bucketSize[0]
-            else:
-                dp[0][i] = math.inf
+        # for i in range(numberOfPebbles + 1):
+        #     if i < bucketSize[0]:
+        #         dp[0][i] = math.inf
+        #     elif i % bucketSize[0] == 0:
+        #         dp[0][i] = i // bucketSize[0]
+        #     else:
+        #         dp[0][i] = math.inf
 
-        print(dp)
+        # print(dp)
 
-        for i in range(1, n):
-            for j in range(numberOfPebbles + 1):
+        # for i in range(1, n):
+        #     for j in range(numberOfPebbles + 1):
 
-                index = max(0, j - bucketSize[i])
+        #         index = max(0, j - bucketSize[i])
 
-                pick = 1 + dp[i][index]
+        #         pick = 1 + dp[i][index]
 
-                nopick = dp[i - 1][j]
+        #         nopick = dp[i - 1][j]
 
-                dp[i][j] = min(pick, nopick)
+        #         dp[i][j] = min(pick, nopick)
 
-        if dp[-1][-1] == math.inf:
-            return -1
+        # if dp[-1][-1] == math.inf:
+        #     return -1
 
-        return dp[-1][-1]
+        # return dp[-1][-1]
 
         answer = f(n - 1, numberOfPebbles, dp)
 
         if answer == math.inf:
             return -1
         return answer
-
-
-if __name__ == "__main__":
-
-    cp = CollectingPebbles()
-
-    numberOfPebbles = 5
-
-    bucketSize = [3, 5]
-
-    print(cp.collectingPebbles(numberOfPebbles, bucketSize))

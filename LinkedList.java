@@ -1,34 +1,33 @@
 class Node {
-    int val;
-    Node next;
 
-    Node(int val) {
-        this.val = val;
-        next = null;
-    }
+  int val;
+  Node next;
 
+  Node(int val) {
+    this.val = val;
+    this.next = null;
+  }
 }
 
 public class LinkedList {
 
-    Node head;
+  Node head;
 
-    LinkedList(int val) {
-        this.head = new Node(val);
-        // this.head = head;
+  LinkedList(int val) {
+    this.head = new Node(val);
+    // this.head = head;
+  }
+
+  LinkedList() {
+    this.head = null;
+  }
+
+  public void printList(Node head) {
+    while (head != null) {
+      System.out.print(head.val + " ");
+      head = head.next;
     }
 
-    LinkedList() {
-        this.head = null;
-    }
-
-    public void printList(Node head) {
-        while (head != null) {
-            System.out.print(head.val + " ");
-            head = head.next;
-        }
-
-        System.out.println();
-    }
-
+    System.out.println();
+  }
 }

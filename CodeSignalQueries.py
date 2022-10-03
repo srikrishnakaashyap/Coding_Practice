@@ -34,7 +34,7 @@ class CodeSignalQueries:
 
 if __name__ == "__main__":
 
-    queries = ["+2", "+3", "+3", "+2", "-3", "-2", "+2", "+3"]
+    queries = ["+2", "+2", "+4", "+3", "-2"]
 
     diff = 1
 
