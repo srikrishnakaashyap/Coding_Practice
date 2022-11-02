@@ -1,5 +1,6 @@
 from collections import defaultdict
 
+
 def Solution(queryType, query):
 
     hm = defaultdict()
@@ -22,5 +23,3 @@ def Solution(queryType, query):
             addToValue += query[i][0]
 
     return answer
-
-if __name__ == "__main__":

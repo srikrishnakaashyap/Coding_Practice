@@ -1,57 +1,56 @@
 class Node:
-    def __init__(self, val):
-        self.val = val
+    def __init__(self, data):
+        self.data = data
         self.next = None
 
 
 class LinkedList:
-    head = None
+    def __init__(self, data):
+        self.head = Node(data)
+        self.tail = self.head
 
-    def __init__(self, val=None):
-        if val is not None:
-            self.head = Node(val)
+    # h         t
+    # 0 -> 1 -> 2 -> None
+    # 0 -> 1 -> 2 -> 3 -> None
+    def pushTail(self, data):
+        node = Node(data)
+        self.tail.next = node
+        self.tail = node
 
+    def pushHead(self, data):
+        node = Node(data)
+        node.next = self.head
+        self.head = node
+
+    # 1 -> 2 -> None
     def printList(self):
-        head = self.head
-        while head is not None:
-            print(head.val, end=" ")
-            head = head.next
-        print()
 
-    def pushHead(self, val):
-        if self.head is not None:
-            n = Node(val)
-            n.next = self.head
-            self.head = n
-        else:
-            self.head = Node(val)
-
-    def popHead(self):
-        if self.head is None:
-            return None
-
-        val = self.head
-        self.head = self.head.next
-        return val.val
+        node = self.head
+        while True:
+            if node == None:
+                break
+            print(node.data, end=" ")
+            node = node.next
 
 
-class LinkedListOperations:
-    def operate(self):
+class operations:
+    def operations(self):
 
-        ll = LinkedList()
+        linkedlist = LinkedList(2)
 
-        # print(ll.head)
-        ll.printList()
+        linkedlist.pushHead(1)
+        # linkedlist.printList()
+        linkedlist.pushHead(0)
 
-        ll.pushHead(5)
-        ll.printList()
+        linkedlist.pushTail(3)
 
-        print(ll.popHead())
-        print(ll.popHead())
+        # print(linkedlist.tail.data)
+
+        linkedlist.printList()
 
 
 if __name__ == "__main__":
 
-    llo = LinkedListOperations()
+    op = operations()
 
-    llo.operate()
+    op.operations()

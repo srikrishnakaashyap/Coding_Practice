@@ -1,12 +1,11 @@
 class LotteryCoupons:
-
     def sumOfNumber(self, n):
 
         s = 0
 
-        while(n > 0):
+        while n > 0:
             i = n % 10
-            n = n//10
+            n = n // 10
             s += i
         return s
 
@@ -15,7 +14,7 @@ class LotteryCoupons:
         hm = {}
 
         maxi = 0
-        for i in range(1, n+1):
+        for i in range(1, n + 1):
             s = self.sumOfNumber(i)
             if s in hm:
                 hm[s] += 1
@@ -25,6 +24,7 @@ class LotteryCoupons:
 
             maxi = max(maxi, hm[s])
         ans = 0
+        print(hm)
         for key, value in hm.items():
             if value == maxi:
                 ans += 1
@@ -36,7 +36,7 @@ if __name__ == "__main__":
 
     lc = LotteryCoupons()
 
-    n = 11
+    n = 3
 
     print(lc.lotteryCoupons(n))
 
